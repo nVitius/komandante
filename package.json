@@ -4,8 +4,19 @@
   "description": "CLI Framework for NodeJS",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "precompile": "./node_modules/.bin/babel -d ./dist ./src",
+    "prepublish": "npm run precompile"
   },
   "author": "nVitius",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-preset-es6-node6": "^0.5.0"
+  },
+  "babel": {
+    "presets": [
+      "es6-node6"
+    ]
+  }
 }
