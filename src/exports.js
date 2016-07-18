@@ -12,6 +12,7 @@ import {
 } from './option';
 
 import Command from './command';
+import Loader from './loader';
 
 const Ordre = {
   ARG_REQUIRED,
@@ -23,7 +24,8 @@ const Ordre = {
   OPT_ARRAY,
   OPT_EMPTY,
 
-  Command
+  Command,
+  Loader
 };
 
 export default Ordre;
