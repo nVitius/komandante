@@ -13,7 +13,7 @@ import {
 
 import Command from './command';
 
-export default {
+const Ordre = {
   ARG_REQUIRED,
   ARG_OPTIONAL,
   ARG_ARRAY,
@@ -21,7 +21,9 @@ export default {
   OPT_REQUIRED,
   OPT_OPTIONAL,
   OPT_ARRAY,
-  OPT_EMPTY
+  OPT_EMPTY,
+
+  Command
 };
 
-export { Command as Command };
+export default Ordre;
