@@ -11,6 +11,7 @@ import {
   OPT_EMPTY
 } from './option';
 
+import CLI from './cli'
 import Command from './command';
 import Loader from './loader';
 
@@ -24,6 +25,7 @@ const Ordre = {
   OPT_ARRAY,
   OPT_EMPTY,
 
+  CLI,
   Command,
   Loader
 };
