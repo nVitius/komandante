@@ -26,6 +26,16 @@ class Command {
     return this._name;
   }
 
+  /** @returns {Array.<Argument>} */
+  get arguments() {
+    return this._arguments;
+  }
+
+  /** @returns {Array.<Option>} */
+  get options() {
+    return this._options;
+  }
+
   run() {
     throw new Error(`Method run() needs to be implemented for Command ${this.name}`)
   }
