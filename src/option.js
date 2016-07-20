@@ -6,7 +6,7 @@ export const OPT_EMPTY = 16;
 export default class Option {
 
   /**
-   * @param {String} name Can be passed w/ or w/o '--' prefixed
+   * @param {String} name Name for this Option
    * @param {String} shortcut One-character string to be used as short-hand name
    * @param {Number} options Config options. One of the OPT_* constants.<br>
    *                         Defaults to OPT_EMPTY
@@ -36,14 +36,17 @@ export default class Option {
       throw new Error(`Invalid options for Option: ${name}`);
     }
 
+    if (this.isEmpty() && this.isArray()) {
+      throw new Error('Cannot use OPT_EMPTY together w/ OPT_ARRAY');
+    }
+
+    if (this.isEmpty() && this.isRequired()) {
+      throw new Error('Cannot use OPT_EMPTY together w/ OPT_REQUIRED');
+    }
+
     this._name = name;
     this._shortcut = shortcut;
     this._options = options;
     this._description = description;
-    this._def = def;
-
-    if ((this._options & OPT_ARRAY) === OPT_ARRAY && (this._options & OPT_EMPTY) === OPT_EMPTY) {
-      throw new Error('Cannot use OPT_ARRAY together w/ OPT_EMPTY');
-    }
   }
 }
