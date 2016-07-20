@@ -25,8 +25,13 @@ const Ordre = {
   OPT_ARRAY,
   OPT_EMPTY,
 
+  /** @type {CLI} CLI */
   CLI,
+
+  /** @type {Command} Command */
   Command,
+
+  /** @type {Loader} Loader */
   Loader
 };
 
