@@ -48,6 +48,28 @@ export default class Option {
     this._shortcut = shortcut;
     this._options = options;
     this._description = description;
+
+    this.value = def;
+  }
+
+  set value(value) {
+    if (this.isEmpty() && (value !== null || typeof value !== 'undefined')) {
+      throw new Error(`Option value passed for OPT_EMPTY: ${this._name}`);
+    }
+
+    if (this.isRequired() && (value === null || typeof value === 'undefined')) {
+      throw new Error(`Option value omitted for OPT_REQUIRED: ${this._name}`);
+    }
+
+    if (this.isEmpty() && (value === null || typeof value === 'undefined')) {
+      value = false;
+    }
+
+    if (this.isArray() && !(value instanceof Array)) {
+      value = [value];
+    }
+
+    this._value = value;
   }
 
   isRequired() {
