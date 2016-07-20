@@ -31,6 +31,34 @@ export default class Argument {
     this._name = name;
     this._options = options;
     this._description = description;
+
+    if (!this.isRequired()) {
+      this.value = def;
+    }
+  }
+
+  get value() {
+    return this._value;
+  }
+
+  set value(value) {
+    console.log(value);
+    if (
+      this.isRequired() &&
+      (value === null || typeof value === 'undefined' || (value instanceof Array && value.length === 0))
+    ) {
+      throw new Error(`Argument required: ${this._name}`);
+    }
+
+    if (this.isArray() && !(value instanceof Array)) {
+      value = [value];
+    }
+
+    this._value = value;
+  }
+
+  get name() {
+    return this._name;
   }
 
   /**
