@@ -1,7 +1,7 @@
 import Argument from './argument';
 import Option from './option';
 
-export default class Command {
+class Command {
 
   constructor(name) {
     this._name = name;
@@ -24,6 +24,10 @@ export default class Command {
 
   get name() {
     return this._name;
+  }
+
+  run() {
+    throw new Error(`Method run() needs to be implemented for Command ${this.name}`)
   }
 
   /**
@@ -64,3 +68,5 @@ export default class Command {
     this._options.push(new Option(name, shortcut, options, description, def));
   }
 }
+
+export default Command
