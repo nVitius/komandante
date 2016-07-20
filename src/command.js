@@ -3,9 +3,22 @@ import Option from './option';
 
 class Command {
 
+  /**
+   * @param {String} name
+   */
   constructor(name) {
     this._name = name;
+
+    /**
+     * @type {Array.<Argument>}
+     * @private
+     */
     this._arguments = [];
+
+    /**
+     * @type {Array.<Option>}
+     * @private
+     */
     this._options = [];
 
     this._configure();
@@ -18,10 +31,12 @@ class Command {
   _configure() {
   }
 
+  /** @param {String} name */
   set name(name) {
     this._name = name;
   }
 
+  /** @returns {String} */
   get name() {
     return this._name;
   }
