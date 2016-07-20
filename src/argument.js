@@ -31,6 +31,32 @@ export default class Argument {
     this._name = name;
     this._options = options;
     this._description = description;
-    this._def = def;
+  }
+
+  /**
+   * Check if Argument is required
+   *
+   * @returns {boolean}
+   */
+  isRequired() {
+    return (this._options & ARG_REQUIRED) === ARG_REQUIRED;
+  }
+
+  /**
+   * Check if Argument is optional
+   *
+   * @returns {boolean}
+   */
+  isOptional() {
+    return (this._options & ARG_OPTIONAL) === ARG_OPTIONAL;
+  }
+
+  /**
+   * Check if Argument is array
+   *
+   * @returns {boolean}
+   */
+  isArray() {
+    return (this._options & ARG_ARRAY) === ARG_ARRAY;
   }
 }

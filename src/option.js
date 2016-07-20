@@ -49,4 +49,20 @@ export default class Option {
     this._options = options;
     this._description = description;
   }
+
+  isRequired() {
+    return (this._options & OPT_REQUIRED) === OPT_REQUIRED;
+  }
+
+  isOptional() {
+    return (this._options & OPT_OPTIONAL) === OPT_OPTIONAL;
+  }
+
+  isArray() {
+    return (this._options & OPT_ARRAY) === OPT_ARRAY;
+  }
+
+  isEmpty() {
+    return (this._options & OPT_EMPTY) === OPT_EMPTY;
+  }
 }
