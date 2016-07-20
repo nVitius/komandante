@@ -11,7 +11,7 @@ export default class Option {
    * @param {Number} options Config options. One of the OPT_* constants.<br>
    *                         Defaults to OPT_EMPTY
    * @param {String} description Descirption to show in help()
-   * @param {*} def Default value for this option
+   * @param {*} def Default value for this option. Not allowed for OPT_REQUIRED
    */
   constructor(
     name,
@@ -44,12 +44,18 @@ export default class Option {
       throw new Error('Cannot use OPT_EMPTY together w/ OPT_REQUIRED');
     }
 
+    if (this.isRequired() && def !== null) {
+      throw new Error('Cannot use default value together w/ OPT_REQUIRED')
+    }
+
     this._name = name;
     this._shortcut = shortcut;
     this._options = options;
     this._description = description;
 
-    this.value = def;
+    if (!this.isRequired()) {
+      this.value = def;
+    }
   }
 
   set value(value) {
