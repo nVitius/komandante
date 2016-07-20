@@ -55,7 +55,7 @@ class Command {
     description = '',
     def = null
   ) {
-    this._arguments.push(new Argument(name, options, description, def));
+    this._arguments[name] = new Argument(name, options, description, def);
   }
 
   /**
@@ -75,7 +75,11 @@ class Command {
     description = '',
     def = null
   ) {
-    this._options.push(new Option(name, shortcut, options, description, def));
+    if (name.indexf('--') === 0) {
+      name = name.substr(2);
+    }
+
+    this._options[name] = new Option(name, shortcut, options, description, def);
   }
 }
 
