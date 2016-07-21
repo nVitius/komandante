@@ -55,6 +55,8 @@ export default class Option {
 
     if (!this.isRequired()) {
       this.value = def;
+    } else {
+      this._value = null;
     }
   }
 
