@@ -58,6 +58,22 @@ export default class Option {
     }
   }
 
+  get name() {
+    return this._name;
+  }
+
+  get shortcut() {
+    return this._shortcut;
+  }
+
+  get description() {
+    return this._description;
+  }
+
+  get value() {
+    return this._value;
+  }
+
   set value(value) {
     if (this.isEmpty() && (value !== null || typeof value !== 'undefined')) {
       throw new Error(`Option value passed for OPT_EMPTY: ${this._name}`);
