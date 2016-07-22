@@ -90,7 +90,7 @@ class Command {
     description = '',
     def = null
   ) {
-    if (name.indexf('--') === 0) {
+    if (name.indexOf('--') === 0) {
       name = name.substr(2);
     }
 
