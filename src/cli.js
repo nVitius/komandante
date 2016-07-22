@@ -74,6 +74,14 @@ class CLI {
     for (let name in this._activeCommand.arguments) {
       if(!this._activeCommand.arguments.hasOwnProperty(name)) continue;
 
+      if (!(argCount in this._cliArgs._)) {
+        if (this._activeCommand.arguments[name].isRequired()) {
+          throw new Error(`Missing required argument: ${name}`);
+        }
+
+        continue;
+      }
+
       const argument = this._activeCommand.arguments[name];
 
       let value;
