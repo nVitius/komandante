@@ -2,7 +2,7 @@ import Debug from 'debug'
 import * as fs from 'fs';
 import * as path from 'path';
 
-import Ordre from './exports'
+import Command from './command';
 
 
 const debug = new Debug('ordre:loader:');
@@ -43,16 +43,15 @@ export default class Loader {
       }
 
       let temp = require(path.join(absolutePath, file)).default;
-      debug(temp);
-
-      if (!(Ordre.Command.isPrototypeOf(temp))) {
-        throw new Error(`Commands must extend Ordre.Command: ${absolutePath}`);
-      }
 
       /**
        * @type {Command}
        */
       let command = new temp();
+
+      if (!(command instanceof Command)) {
+        throw new Error(`Commands must extend Ordre.Command: ${absolutePath}`);
+      }
 
       this._commands[command.name] = command;
     })
