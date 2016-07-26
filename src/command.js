@@ -70,7 +70,24 @@ class Command {
     description = '',
     def = null
   ) {
-    this._arguments[name] = new Argument(name, options, description, def);
+    var argument = new Argument(name, options, description, def);
+
+    console.log(this.arguments);
+    for (let argName in this.arguments) {
+      if(!this.arguments.hasOwnProperty(argName)) continue;
+
+      let arg = this.arguments[argName];
+      if (argument.isRequired() && arg.isOptional()) {
+        throw new Error('Cannot specify an ARG_REQUIRED after ARG_OPTIONAL');
+      }
+
+      if (arg.isArray()) {
+        throw new Error('Cannot add another Argument after an ARG_ARRAY');
+      }
+    }
+
+
+    this._arguments[name] = argument;
   }
 
   /**
