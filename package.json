@@ -23,5 +23,16 @@
   },
   "dependencies": {
     "minimist": "^1.2.0"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nVitius/ordre.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nVitius/ordre/issues"
+  },
+  "homepage": "https://github.com/nVitius/ordre#readme"
 }
