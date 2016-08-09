@@ -5,18 +5,23 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "precompile": "./node_modules/.bin/babel -d ./dist ./src",
+    "precompile": "babel -d ./dist ./src",
     "prepublish": "npm run precompile"
   },
   "author": "nVitius",
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.10.1",
-    "babel-preset-es6-node6": "^0.5.0"
+    "babel-preset-es6-node6": "^0.5.0",
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3"
   },
   "babel": {
     "presets": [
       "es6-node6"
     ]
+  },
+  "dependencies": {
+    "minimist": "^1.2.0"
   }
 }
