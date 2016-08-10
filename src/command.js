@@ -72,7 +72,6 @@ class Command {
   ) {
     var argument = new Argument(name, options, description, def);
 
-    console.log(this.arguments);
     for (let argName in this.arguments) {
       if(!this.arguments.hasOwnProperty(argName)) continue;
 

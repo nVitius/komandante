@@ -42,7 +42,6 @@ export default class Argument {
   }
 
   set value(value) {
-    console.log(value);
     if (
       this.isRequired() &&
       (value === null || typeof value === 'undefined' || (value instanceof Array && value.length === 0))
