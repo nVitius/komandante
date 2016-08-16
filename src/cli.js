@@ -98,9 +98,7 @@ class CLI {
       argCount++;
     }
 
-    for (let name in this._activeCommand.options) {
-      if(!this._activeCommand.options.hasOwnProperty(name)) continue;
-
+    Object.keys(this._activeCommand.options).forEach(name => {
       const option = this._activeCommand.options[name];
 
       let value;
@@ -117,7 +115,7 @@ class CLI {
 
       debug(`Asssigning value ${value} to option ${option.name}`);
       option.value = value;
-    }
+    });
 
   }
 }
