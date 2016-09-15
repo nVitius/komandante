@@ -1,6 +1,6 @@
 {
   "name": "ordre",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "CLI Framework for NodeJS",
   "main": "dist/exports.js",
   "scripts": {
