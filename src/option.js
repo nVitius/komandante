@@ -77,7 +77,7 @@ export default class Option {
   }
 
   set value(value) {
-    if (this.isEmpty() && (value !== null || typeof value !== 'undefined')) {
+    if (this.isEmpty() && !(value === null || typeof value === 'boolean')) {
       throw new Error(`Option value passed for OPT_EMPTY: ${this._name}`);
     }
 
