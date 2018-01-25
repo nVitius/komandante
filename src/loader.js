@@ -42,7 +42,10 @@ export default class Loader {
         return;
       }
 
-      let temp = require(path.join(absolutePath, file)).default;
+      let temp = require(path.join(absolutePath, file));
+      if (temp.__esModule) {
+        temp = temp.default;
+      }
 
       /**
        * @type {Command}
