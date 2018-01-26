@@ -59,7 +59,11 @@ class CLI {
     this._activeCommand = this._commands[name];
     this._parse();
 
-    this._activeCommand.run();
+    const result = this._activeCommand.run();
+
+    return result.__proto__ && result.__proto__.hasOwnProperty('then')
+      ? result
+      : Promise.resolve(result)
   }
 
   _parse() {
