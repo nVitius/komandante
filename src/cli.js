@@ -1,11 +1,11 @@
 import Debug from 'debug'
-import Minimist from 'minimist';
+import Minimist from 'minimist'
 
-import Command from './command';
-import Loader from './loader';
+import Command from './command'
+import Loader from './loader'
 
 
-const debug = new Debug('ordre:cli:');
+const debug = new Debug('ordre:cli:')
 
 class CLI {
   /**
@@ -13,36 +13,36 @@ class CLI {
    * @param {String} dir
    */
   constructor(root, dir) {
-    debug(`Creating CLI in ${root} under ${dir}`);
+    debug(`Creating CLI in ${root} under ${dir}`)
 
     /**
      * @type {Loader}
      * @name CLI#_loader
      * @private
      */
-    this._loader = new Loader(root, dir);
+    this._loader = new Loader(root, dir)
 
     /**
      * @type {Array<Command>}
      * @name CLI#_commands
      * @private
      */
-    this._commands = this._loader.commands;
+    this._commands = this._loader.commands
 
     /**
      * @type {Object}
      * @name CLI#_cliArgs
      * @private
      */
-    this._cliArgs = Minimist(process.argv.slice(3)); // 2 is the command name
-    debug(this._cliArgs);
+    this._cliArgs = Minimist(process.argv.slice(3)) // 2 is the command name
+    debug(this._cliArgs)
 
     /**
      * @type {Command}
      * @name CLI#_activeCommand
      * @private
      */
-    this._activeCommand = null;
+    this._activeCommand = null
   }
 
   /**
@@ -50,16 +50,16 @@ class CLI {
    *                      Defaults to first node argument. (i.e. node cli.js <b>foo:say</b>)
    */
   run(name = process.argv[2]) {
-    debug(`Running command: ${name}`);
+    debug(`Running command: ${name}`)
 
     if (!(name in this._commands)) {
-      throw new Error('Command does not exist!');
+      throw new Error('Command does not exist!')
     }
 
-    this._activeCommand = this._commands[name];
-    this._parse();
+    this._activeCommand = this._commands[name]
+    this._parse()
 
-    const result = this._activeCommand.run();
+    const result = this._activeCommand.run()
 
     return result.__proto__ && result.__proto__.hasOwnProperty('then')
       ? result
@@ -68,60 +68,60 @@ class CLI {
 
   _parse() {
     if (this._activeCommand === null) {
-      throw new Error('No active command');
+      throw new Error('No active command')
     }
 
     // TODO: loop over arguments and assign values
-    let argCount = 0;
+    let argCount = 0
 
     // parse all arguments
     for (let name in this._activeCommand.arguments) {
-      if(!this._activeCommand.arguments.hasOwnProperty(name)) continue;
+      if(!this._activeCommand.arguments.hasOwnProperty(name)) continue
 
       if (!(argCount in this._cliArgs._)) {
         if (this._activeCommand.arguments[name].isRequired()) {
-          throw new Error(`Missing required argument: ${name}`);
+          throw new Error(`Missing required argument: ${name}`)
         }
 
-        continue;
+        continue
       }
 
-      const argument = this._activeCommand.arguments[name];
+      const argument = this._activeCommand.arguments[name]
 
-      let value;
+      let value
       if (argument.isArray()) {
-        value = this._cliArgs._.slice(argCount);
+        value = this._cliArgs._.slice(argCount)
 
       } else {
-        value = this._cliArgs._[argCount];
+        value = this._cliArgs._[argCount]
 
       }
 
-      debug(`Assign value ${value} to argument ${argument.name}`);
-      argument.value = value;
-      argCount++;
+      debug(`Assign value ${value} to argument ${argument.name}`)
+      argument.value = value
+      argCount++
     }
 
     Object.keys(this._activeCommand.options).forEach(name => {
-      const option = this._activeCommand.options[name];
+      const option = this._activeCommand.options[name]
 
-      let value;
+      let value
       if (option.name in this._cliArgs) {
-        value = this._cliArgs[option.name];
+        value = this._cliArgs[option.name]
 
       } else if (option.shortcut in this._cliArgs) {
-        value = this._cliArgs[option.shortcut];
+        value = this._cliArgs[option.shortcut]
 
       } else {
-        return;
+        return
 
       }
 
-      debug(`Asssigning value ${value} to option ${option.name}`);
-      option.value = value;
-    });
+      debug(`Asssigning value ${value} to option ${option.name}`)
+      option.value = value
+    })
 
   }
 }
 
-export default CLI;
+export default CLI

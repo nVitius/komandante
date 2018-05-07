@@ -1,5 +1,5 @@
-import Argument from './argument';
-import Option from './option';
+import Argument from './argument'
+import Option from './option'
 
 class Command {
 
@@ -7,24 +7,24 @@ class Command {
    * @param {String} name
    */
   constructor(name) {
-    this._name = name;
+    this._name = name
 
     /**
      * @type {Array.<Argument>}
      * @private
      */
-    this._arguments = [];
+    this._arguments = []
 
     /**
      * @type {Array.<Option>}
      * @private
      */
-    this._options = [];
+    this._options = []
 
-    this._configure();
+    this._configure()
 
     if (!this._name) {
-      throw new Error('Command cannot have an empty name');
+      throw new Error('Command cannot have an empty name')
     }
   }
 
@@ -33,22 +33,22 @@ class Command {
 
   /** @param {String} name */
   set name(name) {
-    this._name = name;
+    this._name = name
   }
 
   /** @returns {String} */
   get name() {
-    return this._name;
+    return this._name
   }
 
   /** @returns {Array.<Argument>} */
   get arguments() {
-    return this._arguments;
+    return this._arguments
   }
 
   /** @returns {Array.<Option>} */
   get options() {
-    return this._options;
+    return this._options
   }
 
   run() {
@@ -70,23 +70,23 @@ class Command {
     description = '',
     def = null
   ) {
-    var argument = new Argument(name, options, description, def);
+    var argument = new Argument(name, options, description, def)
 
     for (let argName in this.arguments) {
-      if(!this.arguments.hasOwnProperty(argName)) continue;
+      if(!this.arguments.hasOwnProperty(argName)) continue
 
-      let arg = this.arguments[argName];
+      let arg = this.arguments[argName]
       if (argument.isRequired() && arg.isOptional()) {
-        throw new Error('Cannot specify an ARG_REQUIRED after ARG_OPTIONAL');
+        throw new Error('Cannot specify an ARG_REQUIRED after ARG_OPTIONAL')
       }
 
       if (arg.isArray()) {
-        throw new Error('Cannot add another Argument after an ARG_ARRAY');
+        throw new Error('Cannot add another Argument after an ARG_ARRAY')
       }
     }
 
 
-    this._arguments[name] = argument;
+    this._arguments[name] = argument
   }
 
   /**
@@ -107,10 +107,10 @@ class Command {
     def = null
   ) {
     if (name.indexOf('--') === 0) {
-      name = name.substr(2);
+      name = name.substr(2)
     }
 
-    this._options[name] = new Option(name, shortcut, options, description, def);
+    this._options[name] = new Option(name, shortcut, options, description, def)
   }
 }
 

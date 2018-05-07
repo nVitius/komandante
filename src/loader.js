@@ -1,11 +1,11 @@
 import Debug from 'debug'
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from 'fs'
+import * as path from 'path'
 
-import Command from './command';
+import Command from './command'
 
 
-const debug = new Debug('ordre:loader:');
+const debug = new Debug('ordre:loader:')
 
 export default class Loader {
   /**
@@ -13,11 +13,11 @@ export default class Loader {
    * @param {String} dir Sub-directory with Commands
    */
   constructor(root, dir) {
-    this._root = root;
-    this._dir = dir;
-    this._commands = [];
+    this._root = root
+    this._dir = dir
+    this._commands = []
 
-    this._load();
+    this._load()
   }
 
   /**
@@ -28,39 +28,39 @@ export default class Loader {
    * @private
    */
   _load(absolutePath = path.join(this._root, this._dir)) {
-    debug(`Looking for Commands in ${absolutePath}`);
+    debug(`Looking for Commands in ${absolutePath}`)
 
     fs.readdirSync(absolutePath).forEach((file) => {
-      debug(`Checking ${file}`);
+      debug(`Checking ${file}`)
       if (fs.statSync(path.join(absolutePath, file)).isDirectory()) {
-        this._load(path.join(absolutePath, file));
+        this._load(path.join(absolutePath, file))
 
-        return;
+        return
       }
 
       if (file.indexOf('Command') === -1) {
-        return;
+        return
       }
 
-      let temp = require(path.join(absolutePath, file));
+      let temp = require(path.join(absolutePath, file))
       if (temp.__esModule) {
-        temp = temp.default;
+        temp = temp.default
       }
 
       /**
        * @type {Command}
        */
-      let command = new temp();
+      let command = new temp()
 
       if (!(command instanceof Command)) {
-        throw new Error(`Commands must extend Ordre.Command: ${absolutePath}`);
+        throw new Error(`Commands must extend Ordre.Command: ${absolutePath}`)
       }
 
-      this._commands[command.name] = command;
+      this._commands[command.name] = command
     })
   }
 
   get commands() {
-    return this._commands;
+    return this._commands
   }
 }

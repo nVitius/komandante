@@ -1,6 +1,6 @@
-export const ARG_REQUIRED = 2;
-export const ARG_OPTIONAL = 4;
-export const ARG_ARRAY = 8;
+export const ARG_REQUIRED = 2
+export const ARG_OPTIONAL = 4
+export const ARG_ARRAY = 8
 
 export default class Argument {
   /**
@@ -17,28 +17,28 @@ export default class Argument {
     def = null
   ) {
     if (name === null) {
-      throw new Error('Argument mame cannot be empty.');
+      throw new Error('Argument mame cannot be empty.')
     }
 
     if (options === null) {
-      options = ARG_OPTIONAL;
+      options = ARG_OPTIONAL
     }
 
     if (options < 2 || options > 14) {
-      throw new Error(`Invalid options for Argument: ${name}`);
+      throw new Error(`Invalid options for Argument: ${name}`)
     }
 
-    this._name = name;
-    this._options = options;
-    this._description = description;
+    this._name = name
+    this._options = options
+    this._description = description
 
     if (!this.isRequired()) {
-      this.value = def;
+      this.value = def
     }
   }
 
   get value() {
-    return this._value;
+    return this._value
   }
 
   set value(value) {
@@ -46,18 +46,18 @@ export default class Argument {
       this.isRequired() &&
       (value === null || typeof value === 'undefined' || (value instanceof Array && value.length === 0))
     ) {
-      throw new Error(`Argument required: ${this._name}`);
+      throw new Error(`Argument required: ${this._name}`)
     }
 
     if (this.isArray() && !(value instanceof Array)) {
-      value = [value];
+      value = [value]
     }
 
-    this._value = value;
+    this._value = value
   }
 
   get name() {
-    return this._name;
+    return this._name
   }
 
   /**
@@ -66,7 +66,7 @@ export default class Argument {
    * @returns {boolean}
    */
   isRequired() {
-    return (this._options & ARG_REQUIRED) === ARG_REQUIRED;
+    return (this._options & ARG_REQUIRED) === ARG_REQUIRED
   }
 
   /**
@@ -75,7 +75,7 @@ export default class Argument {
    * @returns {boolean}
    */
   isOptional() {
-    return (this._options & ARG_OPTIONAL) === ARG_OPTIONAL;
+    return (this._options & ARG_OPTIONAL) === ARG_OPTIONAL
   }
 
   /**
@@ -84,6 +84,6 @@ export default class Argument {
    * @returns {boolean}
    */
   isArray() {
-    return (this._options & ARG_ARRAY) === ARG_ARRAY;
+    return (this._options & ARG_ARRAY) === ARG_ARRAY
   }
 }

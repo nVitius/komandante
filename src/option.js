@@ -1,7 +1,7 @@
-export const OPT_REQUIRED = 2;
-export const OPT_OPTIONAL = 4;
-export const OPT_ARRAY = 8;
-export const OPT_EMPTY = 16;
+export const OPT_REQUIRED = 2
+export const OPT_OPTIONAL = 4
+export const OPT_ARRAY = 8
+export const OPT_EMPTY = 16
 
 export default class Option {
 
@@ -21,94 +21,94 @@ export default class Option {
     def = null
   ) {
     if (name === null) {
-      throw new Error('Option mame cannot be empty.');
+      throw new Error('Option mame cannot be empty.')
     }
 
     if (typeof shortcut === 'undefined' || shortcut === '') {
-      shortcut = null;
+      shortcut = null
     }
 
     if (!options) {
-      options = OPT_EMPTY;
+      options = OPT_EMPTY
     }
 
     if (options < 2 || options > 30) {
-      throw new Error(`Invalid options for Option: ${name}`);
+      throw new Error(`Invalid options for Option: ${name}`)
     }
 
     if (this.isEmpty() && this.isArray()) {
-      throw new Error('Cannot use OPT_EMPTY together w/ OPT_ARRAY');
+      throw new Error('Cannot use OPT_EMPTY together w/ OPT_ARRAY')
     }
 
     if (this.isEmpty() && this.isRequired()) {
-      throw new Error('Cannot use OPT_EMPTY together w/ OPT_REQUIRED');
+      throw new Error('Cannot use OPT_EMPTY together w/ OPT_REQUIRED')
     }
 
     if (this.isRequired() && def !== null) {
       throw new Error('Cannot use default value together w/ OPT_REQUIRED')
     }
 
-    this._name = name;
-    this._shortcut = shortcut;
-    this._options = options;
-    this._description = description;
+    this._name = name
+    this._shortcut = shortcut
+    this._options = options
+    this._description = description
 
     if (!this.isRequired()) {
-      this.value = def;
+      this.value = def
     } else {
-      this._value = null;
+      this._value = null
     }
   }
 
   get name() {
-    return this._name;
+    return this._name
   }
 
   get shortcut() {
-    return this._shortcut;
+    return this._shortcut
   }
 
   get description() {
-    return this._description;
+    return this._description
   }
 
   get value() {
-    return this._value;
+    return this._value
   }
 
   set value(value) {
     if (this.isEmpty() && !(value === null || typeof value === 'boolean')) {
-      throw new Error(`Option value passed for OPT_EMPTY: ${this._name}`);
+      throw new Error(`Option value passed for OPT_EMPTY: ${this._name}`)
     }
 
     if (this.isRequired() && (value === null || typeof value === 'undefined')) {
-      throw new Error(`Option value omitted for OPT_REQUIRED: ${this._name}`);
+      throw new Error(`Option value omitted for OPT_REQUIRED: ${this._name}`)
     }
 
     if (this.isEmpty() && (value === null || typeof value === 'undefined')) {
-      value = false;
+      value = false
     }
 
     if (this.isArray() && !(value instanceof Array)) {
-      value = [value];
+      value = [value]
     }
 
-    this._value = value;
+    this._value = value
   }
 
   isRequired() {
-    return (this._options & OPT_REQUIRED) === OPT_REQUIRED;
+    return (this._options & OPT_REQUIRED) === OPT_REQUIRED
   }
 
   isOptional() {
-    return (this._options & OPT_OPTIONAL) === OPT_OPTIONAL;
+    return (this._options & OPT_OPTIONAL) === OPT_OPTIONAL
   }
 
   isArray() {
-    return (this._options & OPT_ARRAY) === OPT_ARRAY;
+    return (this._options & OPT_ARRAY) === OPT_ARRAY
   }
 
   isEmpty() {
-    return (this._options & OPT_EMPTY) === OPT_EMPTY;
+    return (this._options & OPT_EMPTY) === OPT_EMPTY
   }
 }
