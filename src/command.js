@@ -10,16 +10,16 @@ class Command {
     this._name = name
 
     /**
-     * @type {Array.<Argument>}
+     * @type {Map<String, Argument>}
      * @private
      */
-    this._arguments = []
+    this._arguments = new Map()
 
     /**
-     * @type {Array.<Option>}
+     * @type {Map<String, Option>}
      * @private
      */
-    this._options = []
+    this._options = new Map()
 
     this._configure()
 
@@ -41,12 +41,12 @@ class Command {
     return this._name
   }
 
-  /** @returns {Array.<Argument>} */
+  /** @returns {Map<String, Argument>} */
   get arguments() {
     return this._arguments
   }
 
-  /** @returns {Array.<Option>} */
+  /** @returns {Map<String, Option>} */
   get options() {
     return this._options
   }
@@ -70,23 +70,19 @@ class Command {
     description = '',
     def = null
   ) {
-    var argument = new Argument(name, options, description, def)
+    const newArgument = new Argument(name, options, description, def)
 
-    for (let argName in this.arguments) {
-      if(!this.arguments.hasOwnProperty(argName)) continue
-
-      let arg = this.arguments[argName]
-      if (argument.isRequired() && arg.isOptional()) {
+    for (const argument in this.arguments.values()) {
+      if (newArgument.isRequired() && argument.isOptional()) {
         throw new Error('Cannot specify an ARG_REQUIRED after ARG_OPTIONAL')
       }
 
-      if (arg.isArray()) {
+      if (argument.isArray()) {
         throw new Error('Cannot add another Argument after an ARG_ARRAY')
       }
     }
 
-
-    this._arguments[name] = argument
+    this.arguments.set(name, newArgument)
   }
 
   /**
@@ -110,7 +106,7 @@ class Command {
       name = name.substr(2)
     }
 
-    this._options[name] = new Option(name, shortcut, options, description, def)
+    this.options.set(name, new Option(name, shortcut, options, description, def))
   }
 }
 
