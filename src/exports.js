@@ -35,4 +35,6 @@ const Ordre = {
   Loader
 }
 
-export default Ordre
+Ordre.default = Ordre
+
+module.exports = Ordre
