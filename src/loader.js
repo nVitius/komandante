@@ -50,7 +50,17 @@ export default class Loader {
       /**
        * @type {Command}
        */
-      let command = new temp()
+      let command
+
+      try {
+        command = new temp()
+      } catch (e) {
+        if (e instanceof TypeError) {
+          throw new Error(`Error when trying to instantiate class for file: ${file}. Did you export the class? \n ${e.message}`)
+        }
+
+        throw e
+      }
 
       if (!(command instanceof Command)) {
         throw new Error(`Commands must extend Ordre.Command: ${absolutePath}`)
