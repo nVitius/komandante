@@ -75,50 +75,34 @@ class CLI {
     let argCount = 0
 
     // parse all arguments
-    for (let name in this._activeCommand.arguments) {
-      if(!this._activeCommand.arguments.hasOwnProperty(name)) continue
-
-      if (!(argCount in this._cliArgs._)) {
-        if (this._activeCommand.arguments[name].isRequired()) {
-          throw new Error(`Missing required argument: ${name}`)
-        }
-
-        continue
-      }
-
-      const argument = this._activeCommand.arguments[name]
-
+    this._activeCommand.arguments.forEach(argument => {
       let value
       if (argument.isArray()) {
-        value = this._cliArgs._.slice(argCount)
+        argument.value = this._cliArgs._.slice(argCount)
 
       } else {
-        value = this._cliArgs._[argCount]
+        argument.value = this._cliArgs._[argCount]
 
       }
 
-      debug(`Assign value ${value} to argument ${argument.name}`)
-      argument.value = value
+      debug(`Assigned value ${argument.value} to argument ${argument.name}`)
       argCount++
-    }
+    })
 
-    Object.keys(this._activeCommand.options).forEach(name => {
-      const option = this._activeCommand.options[name]
-
+    this._activeCommand.options.forEach(option => {
       let value
       if (option.name in this._cliArgs) {
-        value = this._cliArgs[option.name]
+        option.value = this._cliArgs[option.name]
 
       } else if (option.shortcut in this._cliArgs) {
-        value = this._cliArgs[option.shortcut]
+        option.value = this._cliArgs[option.shortcut]
 
       } else {
         return
 
       }
 
-      debug(`Asssigning value ${value} to option ${option.name}`)
-      option.value = value
+      debug(`Assigned value ${option.value} to option ${option.name}`)
     })
 
   }
