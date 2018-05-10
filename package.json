@@ -1,6 +1,6 @@
 {
   "name": "komandante",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "CLI Framework for NodeJS",
   "main": "dist/exports.js",
   "scripts": {
