@@ -77,6 +77,16 @@ class CLI {
     // parse all arguments
     this._activeCommand.arguments.forEach(argument => {
       let value
+
+      if (this._cliArgs._[argCount] === undefined) {
+        if (argument.isRequired()) {
+          throw new Error(`Missing required argument: ${argument.name}`)
+
+        }
+
+        return
+      }
+
       if (argument.isArray()) {
         argument.value = this._cliArgs._.slice(argCount)
 
